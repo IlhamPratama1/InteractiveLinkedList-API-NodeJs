@@ -104,4 +104,5 @@ const authJwt = {
   isUserOrGuest: isUserOrGuest,
   isAdmin: isAdmin
 };
+
 module.exports = authJwt;

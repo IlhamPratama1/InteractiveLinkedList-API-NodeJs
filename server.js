@@ -1,31 +1,28 @@
 const express = require('express');
 const cors = require('cors');
-
 const app = express();
+const dotenv = require('dotenv');
+const db = require("./app/models/index");
 
-require('dotenv').config();
+// ENV
+dotenv.config();
 
-var corsOptions = {
-    origin: "http://localhost:3000"
-};
+// CORS
+var corsOptions = { origin: "http://localhost:3000" };
 
-// Middleware
+// #region Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// #endregion
 
 // DB Connect
-const db = require("./app/models/index");
 db.sequelize.sync();
 
-app.get('/', (req, res) => {
-    res.send({ message: "Welcome to Exam App server"});
-});
+// Route
+require('./app/routes/index.routes')(app);
 
-// Routes
-require("./app/routes/auth.routes.js")(app);
-
-// Start
+// Initialize
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on port ${process.env.PORT}.`);
 });

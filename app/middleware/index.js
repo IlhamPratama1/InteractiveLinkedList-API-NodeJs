@@ -3,5 +3,5 @@ const authJwt = require('./authJwt');
 
 module.exports = {
     authValidation,
-    authValidation
+    authJwt
 }
