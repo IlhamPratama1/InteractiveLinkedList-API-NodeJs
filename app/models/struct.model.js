@@ -5,7 +5,7 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         data: {
-            type: Sequelize.STRING,
+            type: Sequelize.JSON,
             allowNull: false
         }
     });

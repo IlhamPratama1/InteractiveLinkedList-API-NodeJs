@@ -22,7 +22,10 @@ exports.listDetail = async (req, res) => {
         const list = await List.findOne({
             where: {
                 id: req.params.id
-            }
+            },
+            include: [
+                { model: db.structs }, { model: db.nodes }, { model: db.codes }
+            ]
         });
         if (!list)
             return res.status(400).send({ 'message': `list not found` });

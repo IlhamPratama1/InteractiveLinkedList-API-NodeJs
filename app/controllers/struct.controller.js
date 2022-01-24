@@ -29,6 +29,7 @@ exports.getByListId = async (req, res) => {
 exports.createStruct = async (req, res) => {
     try {
         const struct = await Struct.create({
+            name: req.body.name,
             data: req.body.data,
             listId: req.body.listId
         });
