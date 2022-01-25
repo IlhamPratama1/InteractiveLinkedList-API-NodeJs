@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Log = sequelize.define("logs", {
         data: {
-            type: Sequelize.STRING,
+            type: Sequelize.JSON,
             allowNull: true
         }
     });

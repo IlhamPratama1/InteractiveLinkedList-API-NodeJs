@@ -26,13 +26,14 @@ const db = {}
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.users = require("../models/user.model.js")(sequelize, Sequelize);
-db.roles = require("../models/role.model.js")(sequelize, Sequelize);
-db.lists = require("../models/list.model.js")(sequelize, Sequelize);
-db.structs = require("../models/struct.model.js")(sequelize, Sequelize);
-db.nodes = require("../models/node.model.js")(sequelize, Sequelize);
-db.codes = require("../models/code.model.js")(sequelize, Sequelize);
-db.logs = require("../models/log.modal.js")(sequelize, Sequelize);
+db.users = require("./user.model.js")(sequelize, Sequelize);
+db.roles = require("./role.model.js")(sequelize, Sequelize);
+db.lists = require("./list.model.js")(sequelize, Sequelize);
+db.structs = require("./struct.model.js")(sequelize, Sequelize);
+db.nodes = require("./node.model.js")(sequelize, Sequelize);
+db.codes = require("./code.model.js")(sequelize, Sequelize);
+db.logs = require("./log.model.js")(sequelize, Sequelize);
+db.operations = require("./operation.model.js")(sequelize, Sequelize);
 
 // #region User Associations
 db.users.belongsToMany(db.roles, {
@@ -100,7 +101,12 @@ db.codes.belongsTo(db.lists, {
         allowNull: false
     }
 });
-db.codes.hasMany(db.logs, {
+db.codes.hasOne(db.logs, {
+    foreignKey: {
+        allowNull: false,
+    }
+});
+db.codes.hasOne(db.operations, {
     foreignKey: {
         allowNull: false,
     }
@@ -109,6 +115,15 @@ db.codes.hasMany(db.logs, {
 
 // #region Log Associations
 db.logs.belongsTo(db.codes, {
+    foreignKey: {
+        name: "codeId",
+        allowNull: false
+    }
+});
+// #endregion
+
+// #region operations Associations
+db.operations.belongsTo(db.codes, {
     foreignKey: {
         name: "codeId",
         allowNull: false

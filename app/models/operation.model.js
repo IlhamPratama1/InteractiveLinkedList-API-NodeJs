@@ -1,10 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
-    const Node = sequelize.define("nodes", {
+    const Operation = sequelize.define("operations", {
         data: {
             type: Sequelize.JSON,
             allowNull: true
         }
     });
 
-    return Node;
+    return Operation;
 }

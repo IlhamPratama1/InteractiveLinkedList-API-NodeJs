@@ -6,7 +6,10 @@ exports.getByListId = async (req, res) => {
         const code = await Code.findOne({ 
             where: {
                 listId: req.params.id
-            }
+            },
+            include: [
+                { model: db.logs }, { model: db.operations }
+            ]
         });
         if (!code)
             return res.status(400).send({ 'message': `code not found` });
