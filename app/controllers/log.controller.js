@@ -41,3 +41,24 @@ exports.createLog = async (req, res) => {
         return res.status(400).send({ 'message': `error creating log: ${err}`});
     }
 }
+
+exports.updateByCodeId = async (req, res) => {
+    try {
+        const log = await Log.findOne({ 
+            where: {
+                codeId: req.body.codeId
+            }
+        });
+        if(!log)
+            return res.status(400).send({ 'message': `log not found` });
+        await log.update({
+            data: req.body.data
+        });
+        return res.status(200).send({
+            'message': `log updated`,
+            'data': log
+        });
+    } catch (err) {
+        return res.status(400).send({ 'message': `error updating log: ${err}`});
+    }
+}
