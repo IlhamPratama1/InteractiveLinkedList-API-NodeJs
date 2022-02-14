@@ -5,6 +5,7 @@ const nodeRoute = require('./node.routes');
 const codeRoute = require('./code.routes');
 const logRoute = require('./log.routes');
 const operationRoute = require('./operation.routes');
+const searchLogRoute = require('./searchLog.routes');
 
 module.exports = (app) => {
 
@@ -28,6 +29,7 @@ module.exports = (app) => {
     app.use('/api/code', codeRoute);
     app.use('/api/log', logRoute);
     app.use('/api/operation', operationRoute);
+    app.use('/api/search-log', searchLogRoute);
     // #endregion
     
 }

@@ -34,6 +34,7 @@ db.nodes = require("./node.model.js")(sequelize, Sequelize);
 db.codes = require("./code.model.js")(sequelize, Sequelize);
 db.logs = require("./log.model.js")(sequelize, Sequelize);
 db.operations = require("./operation.model.js")(sequelize, Sequelize);
+db.searchLogs = require("./searchLog.model.js")(sequelize, Sequelize);
 
 // #region User Associations
 db.users.belongsToMany(db.roles, {
@@ -111,6 +112,11 @@ db.codes.hasOne(db.operations, {
         allowNull: false,
     }
 });
+db.codes.hasOne(db.searchLogs, {
+    foreignKey: {
+        allowNull: false,
+    }
+});
 // #endregion
 
 // #region Log Associations
@@ -124,6 +130,15 @@ db.logs.belongsTo(db.codes, {
 
 // #region operations Associations
 db.operations.belongsTo(db.codes, {
+    foreignKey: {
+        name: "codeId",
+        allowNull: false
+    }
+});
+// #endregion
+
+// #region searchLog Associations
+db.searchLogs.belongsTo(db.codes, {
     foreignKey: {
         name: "codeId",
         allowNull: false

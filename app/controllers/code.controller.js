@@ -8,7 +8,7 @@ exports.getByListId = async (req, res) => {
                 listId: req.params.id
             },
             include: [
-                { model: db.logs }, { model: db.operations }
+                { model: db.logs }, { model: db.operations }, { model: db.searchLogs }
             ]
         });
         if (!code)
