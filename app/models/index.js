@@ -13,7 +13,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
         acquire: dbConfig.pool.acquire,
         idle: dbConfig.pool.idle
     },
-/*     dialectOptions: {
+    /* dialectOptions: {
         ssl: {
             require: true,
             rejectUnauthorized: false
@@ -35,6 +35,8 @@ db.codes = require("./code.model.js")(sequelize, Sequelize);
 db.logs = require("./log.model.js")(sequelize, Sequelize);
 db.operations = require("./operation.model.js")(sequelize, Sequelize);
 db.searchLogs = require("./searchLog.model.js")(sequelize, Sequelize);
+db.quests = require("./quest.model.js")(sequelize, Sequelize);
+db.userQuests = require("./userQuest.model.js")(sequelize, Sequelize);
 
 // #region User Associations
 db.users.belongsToMany(db.roles, {
@@ -43,9 +45,10 @@ db.users.belongsToMany(db.roles, {
     otherKey: "roleId"
 });
 db.users.hasMany(db.lists);
+db.users.hasMany(db.userQuests);
 // #endregion
 
-// #region User Associations
+// #region Roles Associations
 db.roles.belongsToMany(db.users, {
     through: "user_roles",
     foreignKey: "roleId",
@@ -146,6 +149,22 @@ db.searchLogs.belongsTo(db.codes, {
 });
 // #endregion
 
+// #region Quest Associations
+db.quests.hasMany(db.userQuests);
+db.userQuests.belongsTo(db.users, {
+    foreignKey: {
+        name: "userId",
+        allowNull: false
+    }
+});
+db.userQuests.belongsTo(db.quests, {
+    foreignKey: {
+        name: "questId",
+        allowNull: false
+    }
+});
+
+// #endregion
 db.ROLES = ["guest", "user", "admin"];
 
 module.exports = db;

@@ -38,7 +38,7 @@ exports.updateByListId = async (req, res) => {
                 listId: req.body.listId
             }
         });
-        if(!node)
+        if (!node)
             return res.status(400).send({ 'message': `node not found` });
         await node.update({
             data: req.body.data
@@ -48,7 +48,7 @@ exports.updateByListId = async (req, res) => {
             'data': node
         });
     } catch (err) {
-        return res.status(400).send({ 'message': `error creating node: ${err}`});
+        return res.status(400).send({ 'message': `error updating node: ${err}`});
     }
 }
 

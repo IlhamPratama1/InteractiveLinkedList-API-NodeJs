@@ -1,11 +1,19 @@
 module.exports = (sequelize, Sequelize) => {
     const Quest = sequelize.define("quests", {
-        title: {
-            type: Sequelize.string,
+        name: {
+            type: Sequelize.STRING,
+            allowNull: false
+        },
+        detail: {
+            type: Sequelize.STRING,
+            allowNull: false,
+        },
+        tool: {
+            type: Sequelize.STRING,
             allowNull: false
         },
         type: {
-            type: Sequelize.string,
+            type: Sequelize.STRING,
             allowNull: false
         }
     });
