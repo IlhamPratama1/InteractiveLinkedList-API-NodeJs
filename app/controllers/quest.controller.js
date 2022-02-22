@@ -18,6 +18,7 @@ exports.getMyQuest = async (req, res) => {
             where: {
                 userId: req.userId
             },
+            include: [ Quest ]
         });
         return res.status(200).send(myQuests);
     } catch (err) {
@@ -27,7 +28,7 @@ exports.getMyQuest = async (req, res) => {
 
 exports.updateById = async (req, res) => {
     try {
-        const userQuest = UserQuest.findOne({
+        const userQuest = await UserQuest.findOne({
             where: {
                 id: req.body.id
             }
@@ -35,7 +36,7 @@ exports.updateById = async (req, res) => {
         if (!userQuest)
             return res.status(400).send({ 'message': 'quest not found' });
         await userQuest.update({
-            isComplete: true
+            isComplete: req.body.isComplete
         });
         return res.status(200).send({
             'message': 'user quest updated',
