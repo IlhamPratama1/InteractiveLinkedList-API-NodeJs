@@ -18,7 +18,10 @@ exports.myUserDetail = async (req, res) => {
       },
       include: [
         { model: db.lists }, { model: db.userQuests }
-      ]
+      ],
+      attributes: {
+        exclude: ['password']
+      }
     });
     return res.status(200).send(user);
   } catch (err) {
