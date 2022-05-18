@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  postgres-database:
+    container_name: postgres-database
+    image: postgres:14.2-alpine
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Ilham11pratama
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - '5432:5432'
+  interactive-linked-list-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: base
+    volumes:
+      - ./src:/home/node/interactive-linked-list-api/src
+    container_name: interactive-linked-list-api
+    depends_on:
+      - postgres-database
+    expose:
+      - '8000'
+    ports:
+      - '8000:8000'
+    command: npm run start
