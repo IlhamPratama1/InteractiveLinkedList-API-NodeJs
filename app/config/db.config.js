@@ -1,6 +1,6 @@
 module.exports = {
   HOST: "localhost",
-  PORT: 1343,
+  PORT: process.env.NODE_ENV === 'development' ? 1343 : 5432,
   USER: "postgres",
   PASSWORD: "Ilham11pratama",
   DB: "interactive_linkedlist",
