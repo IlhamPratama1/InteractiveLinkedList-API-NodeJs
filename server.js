@@ -8,7 +8,7 @@ const db = require("./app/models/index");
 dotenv.config();
 
 // CORS
-var corsOptions = { origin: "http://localhost:3000" };
+var corsOptions = { origin: "https://interactive-linked-list-app.netlify.app/" };
 
 // #region Middleware
 app.use(cors(corsOptions));
