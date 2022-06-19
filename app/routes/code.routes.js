@@ -6,6 +6,6 @@ router.get('/detail/:id', [ authJwt.verifyToken, authJwt.isUser ], controller.ge
 router.post('/create', [ authJwt.verifyToken, authJwt.isUser ], controller.createCode);
 router.put('/update', [ authJwt.verifyToken, authJwt.isUser ], controller.updateByListId);
 router.delete('/delete/:id', [ authJwt.verifyToken, authJwt.isUser ], controller.deleteById);
-router.post('/compile', [ authJwt.verifyToken, authJwt.isUser ], controller.compileCode);
+router.post('/compile', controller.compileCode);
 
 module.exports = router;
