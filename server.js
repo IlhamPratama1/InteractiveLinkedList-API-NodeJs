@@ -8,7 +8,7 @@ const db = require("./app/models/index");
 dotenv.config();
 
 // CORS
-var corsOptions = { origin: "https://interactive-linked-list-app.netlify.app" };
+var corsOptions = { origin: ["https://interactive-linked-list-app.netlify.app", 'http://localhost:3000'] };
 
 // #region Middleware
 app.use(cors(corsOptions));
@@ -17,8 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 // #endregion
 
 // DB Connect
-db.sequelize.sync({ force: true }).then(() => {
-    initializeData();
+db.sequelize.sync({ force: false }).then(() => {
+    // initializeData();
 });
 
 function initializeData() {

@@ -7,5 +7,6 @@ router.get('/my-quest', [ authJwt.verifyToken, authJwt.isUser ], controller.getM
 router.post('/create', [ authJwt.verifyToken, authJwt.isUser], controller.createNewQuest);
 router.put('/update', [ authJwt.verifyToken, authJwt.isUser], controller.updateById);
 router.delete('/delete/:id', [ authJwt.verifyToken, authJwt.isUser], controller.deleteById);
+router.get('/filter-quest', controller.getFilteredQuest);
 
 module.exports = router;

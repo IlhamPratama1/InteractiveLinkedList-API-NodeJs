@@ -7,6 +7,8 @@ const logRoute = require('./log.routes');
 const operationRoute = require('./operation.routes');
 const searchLogRoute = require('./searchLog.routes');
 const questRoute = require('./quest.routes');
+const feedbackRoute = require('./feedback.routes');
+const userFeedbackRoute = require('./userFeedback.routes');
 
 module.exports = (app) => {
 
@@ -32,6 +34,8 @@ module.exports = (app) => {
     app.use('/api/operation', operationRoute);
     app.use('/api/search-log', searchLogRoute);
     app.use('/api/quest', questRoute);
+    app.use('/api/feedback', feedbackRoute);
+    app.use('/api/user-feedback', userFeedbackRoute);
     // #endregion
     
 }

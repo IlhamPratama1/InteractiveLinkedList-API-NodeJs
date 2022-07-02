@@ -84,3 +84,34 @@ exports.deleteById = async (req, res) => {
         return res.status(400).send({ 'message': `error delete quest: ${err}` });
     }
 }
+
+exports.getFilteredQuest = async (req, res) => {
+    try {
+        const userList = await User.findAll({
+            include: {
+                model: UserQuest,
+                where: {
+                    isComplete: req.query.isComplete
+                },
+                include: [
+                    {
+                        model: Quest,
+                        where: {
+                            type: req.query.type
+                        },
+                        required: true
+                    }
+                ],
+                required: true
+            },
+        })
+
+        return res.status(200).send({
+            'message': "create quest success",
+            'length': userList.length,
+            'data': userList
+        });
+    } catch (err) {
+        return res.status(400).send({ 'message': `error get quests: ${err}` });
+    }
+}

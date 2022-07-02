@@ -35,6 +35,11 @@ db.operations = require("./operation.model.js")(sequelize, Sequelize);
 db.searchLogs = require("./searchLog.model.js")(sequelize, Sequelize);
 db.quests = require("./quest.model.js")(sequelize, Sequelize);
 db.userQuests = require("./userQuest.model.js")(sequelize, Sequelize);
+db.feedbacks = require('./feedback.model')(sequelize, Sequelize);
+db.userFeedbacks = require('./userFeedback.model')(sequelize, Sequelize);
+db.questions = require('./question.model')(sequelize, Sequelize);
+db.answers = require('./answer.model')(sequelize, Sequelize);
+db.userQuizzes = require('./userQuiz.model')(sequelize, Sequelize);
 
 // #region User Associations
 db.users.belongsToMany(db.roles, {
@@ -44,6 +49,8 @@ db.users.belongsToMany(db.roles, {
 });
 db.users.hasMany(db.lists);
 db.users.hasMany(db.userQuests);
+db.users.hasMany(db.userFeedbacks);
+db.users.hasMany(db.userQuizzes);
 // #endregion
 
 // #region Roles Associations
@@ -161,8 +168,53 @@ db.userQuests.belongsTo(db.quests, {
         allowNull: false
     }
 });
-
 // #endregion
+
+// #region UserFeedback
+db.feedbacks.hasMany(db.userFeedbacks);
+db.userFeedbacks.belongsTo(db.feedbacks,  {
+    foreignKey: {
+        name: "feedbackId",
+        allowNull: false
+    }
+});
+db.userFeedbacks.belongsTo(db.users, {
+    foreignKey: {
+        name: "userId",
+        allowNull: false
+    }
+});
+// #endregion
+
+// #region
+db.userQuizzes.belongsTo(db.users,  {
+    foreignKey: {
+        name: "userId",
+        allowNull: false
+    }
+});
+db.userQuizzes.belongsToMany(db.questions, {
+    through: "userQuiz_questions",
+    foreignKey: "quizId",
+    otherKey: "questionId"
+});
+db.questions.belongsToMany(db.userQuizzes, {
+    through: "userQuiz_questions",
+    foreignKey: "questionId",
+    otherKey: "quizId"
+});
+db.questions.belongsToMany(db.answers, {
+    through: 'question_answers',
+    foreignKey: "questionId",
+    otherKey: "answerId"
+});
+db.answers.belongsToMany(db.questions, {
+    through: 'question_answers',
+    foreignKey: "answerId",
+    otherKey: "questionId"
+});
+// #endregion
+
 db.ROLES = ["guest", "user", "admin"];
 
 module.exports = db;
