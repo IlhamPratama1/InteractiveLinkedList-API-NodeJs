@@ -171,7 +171,9 @@ db.userQuests.belongsTo(db.quests, {
 // #endregion
 
 // #region UserFeedback
-db.feedbacks.hasMany(db.userFeedbacks);
+db.feedbacks.hasMany(db.userFeedbacks, {
+    onDelete: 'CASCADE'
+});
 db.userFeedbacks.belongsTo(db.feedbacks,  {
     foreignKey: {
         name: "feedbackId",

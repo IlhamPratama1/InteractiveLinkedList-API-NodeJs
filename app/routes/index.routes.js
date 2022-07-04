@@ -9,6 +9,7 @@ const searchLogRoute = require('./searchLog.routes');
 const questRoute = require('./quest.routes');
 const feedbackRoute = require('./feedback.routes');
 const userFeedbackRoute = require('./userFeedback.routes');
+const quizRoute = require('./quiz.routes');
 
 module.exports = (app) => {
 
@@ -36,6 +37,7 @@ module.exports = (app) => {
     app.use('/api/quest', questRoute);
     app.use('/api/feedback', feedbackRoute);
     app.use('/api/user-feedback', userFeedbackRoute);
+    app.use('/api/quiz', quizRoute);
     // #endregion
     
 }
