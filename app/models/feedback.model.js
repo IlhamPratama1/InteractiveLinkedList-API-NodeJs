@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Feedback = sequelize.define('feedbacks', {
         question: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
             allowNull: false
         },
         type: {

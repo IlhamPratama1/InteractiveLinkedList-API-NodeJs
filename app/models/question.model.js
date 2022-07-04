@@ -1,7 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Question = sequelize.define("questions", {
         question: {
-            type: Sequelize.STRING,
+            type: Sequelize.TEXT,
             allowNull: false
         },
         isCorrectId: {
