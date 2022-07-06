@@ -27,6 +27,18 @@ exports.deleteAnswer = async (req, res) => {
     }
 }
 
+exports.updateAnswer = async (req, res) => {
+    try {
+        const answer = await Answer.findByPk(req.params.id);
+        if (!answer) return res.status(400).send({ 'message': `error get question:` });
+        answer.answer = req.body.answer;
+        await answer.save();
+        return res.status(200).send(answer);
+    } catch (err) {
+        return res.status(400).send({ 'message': `error create question: ${err}` });        
+    }
+}
+
 exports.getQuestion = async (req, res) => {
     try {
         const questions = await Question.findAll({
@@ -66,6 +78,18 @@ exports.deleteQuestion = async (req, res) => {
         return res.status(200).send({ 'message': `question deleted` });
     } catch (err) {
         return res.status(400).send({ 'message': `error question answer: ${err}` });
+    }
+}
+
+exports.updateQuestion = async (req, res) => {
+    try {
+        const question = await Question.findByPk(req.params.id);
+        if (!question) return res.status(400).send({ 'message': `error get question:` });
+        question.isCorrectId = req.body.isCorrectId;
+        await question.save();
+        return res.status(200).send(question);
+    } catch (err) {
+        return res.status(400).send({ 'message': `error create question: ${err}` });        
     }
 }
 

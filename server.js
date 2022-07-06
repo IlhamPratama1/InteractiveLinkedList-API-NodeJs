@@ -17,8 +17,8 @@ app.use(express.urlencoded({ extended: true }));
 // #endregion
 
 // DB Connect
-db.sequelize.sync({ force: true }).then(() => {
-    initializeData();
+db.sequelize.sync({ force: false }).then(() => {
+    // initializeData();
 });
 
 function initializeData() {
