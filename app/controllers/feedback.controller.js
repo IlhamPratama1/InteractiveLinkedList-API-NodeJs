@@ -1,5 +1,6 @@
 const db = require('../models');
 const Feedback = db.feedbacks;
+const UserFeedback = db.userFeedbacks;
 
 exports.getAllFeedback = async (req, res) => {
     try {
@@ -7,6 +8,21 @@ exports.getAllFeedback = async (req, res) => {
         return res.status(200).send(feedbacks);
     } catch (err) {
         return res.status(400).send({ 'message': `error get feedback: ${err}` });
+    }
+}
+
+exports.getFeedbackWithResponse = async (req, res) => {
+    try {
+        const feedbacks = await Feedback.findAll({
+            include: [
+                { 
+                    model: UserFeedback
+                }
+            ]
+        });
+        return res.status(200).send(feedbacks);
+    } catch (err) {
+        return res.status(400).send({ 'message': `error get myFeedback: ${err}` });
     }
 }
 
