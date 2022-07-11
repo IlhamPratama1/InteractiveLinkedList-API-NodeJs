@@ -10,7 +10,7 @@ router.post('/question/create', controller.createQuestion);
 router.delete('/question/delete/:id', controller.deleteQuestion);
 router.put('/question/update/:id', controller.updateQuestion);
 router.get('/all', controller.getAllUserQuiz);
-router.get('/user', controller.getUserQuiz);
+router.get('/user', [ authJwt.verifyToken, authJwt.isUser], controller.getUserQuiz);
 router.post('/create', [ authJwt.verifyToken, authJwt.isUser], controller.createUserQuiz);
 router.post('/raw-create', controller.createRawUserQuiz);
 router.delete('/delete/:id', controller.deleteUserQuiz);
