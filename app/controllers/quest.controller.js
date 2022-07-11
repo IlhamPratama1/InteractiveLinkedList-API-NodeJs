@@ -87,30 +87,38 @@ exports.deleteById = async (req, res) => {
 
 exports.getFilteredQuest = async (req, res) => {
     try {
-        const userList = await User.findAll({
-            include: {
-                model: UserQuest,
-                where: {
-                    isComplete: req.query.isComplete
+        const datas = [
+            {'type': 'single', 'isComplete': true},
+            {'type': 'single', 'isComplete': false},
+            {'type': 'double', 'isComplete': true},
+            {'type': 'double', 'isComplete': false},
+            {'type': 'circular', 'isComplete': true},
+            {'type': 'circular', 'isComplete': false},
+        ];
+        for (let i = 0; i < datas.length; i++) {
+            const userList = await User.findAll({
+                include: {
+                    model: UserQuest,
+                    where: {
+                        isComplete: datas[i].isComplete
+                    },
+                    include: [
+                        {
+                            model: Quest,
+                            where: {
+                                type: datas[i].type
+                            },
+                            required: true
+                        }
+                    ],
+                    required: true
                 },
-                include: [
-                    {
-                        model: Quest,
-                        where: {
-                            type: req.query.type
-                        },
-                        required: true
-                    }
-                ],
-                required: true
-            },
-        })
+            });
+            datas[i]['data'] = userList;
+            datas[i]['length'] = userList.length;
+        }
 
-        return res.status(200).send({
-            'message': "create quest success",
-            'length': userList.length,
-            'data': userList
-        });
+        return res.status(200).send(datas);
     } catch (err) {
         return res.status(400).send({ 'message': `error get quests: ${err}` });
     }
