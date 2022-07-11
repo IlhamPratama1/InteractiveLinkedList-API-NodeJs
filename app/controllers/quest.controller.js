@@ -94,6 +94,8 @@ exports.getFilteredQuest = async (req, res) => {
             {'type': 'double', 'isComplete': false},
             {'type': 'circular', 'isComplete': true},
             {'type': 'circular', 'isComplete': false},
+            {'type': 'struct', 'isComplete': true},
+            {'type': 'struct', 'isComplete': false},
         ];
         for (let i = 0; i < datas.length; i++) {
             const userList = await User.findAll({
