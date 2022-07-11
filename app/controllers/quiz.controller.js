@@ -93,6 +93,15 @@ exports.updateQuestion = async (req, res) => {
     }
 }
 
+exports.getAllUserQuiz = async (req, res) => {
+    try {
+        const UserQuizzes = await UserQuiz.findAll();
+        return res.status(200).send(UserQuizzes);
+    } catch (err) {
+        return res.status(400).send({ 'message': `error get all user quiz: ${err}` });
+    }
+}
+
 exports.createUserQuiz = async (req, res) => {
     try {
         let result = 0;
@@ -110,6 +119,32 @@ exports.createUserQuiz = async (req, res) => {
         return res.status(200).send(userQuiz);
     } catch (err) {
         return res.status(400).send({ 'message': `error create user quiz: ${err}` });
+    }
+}
+
+exports.createRawUserQuiz = async (req, res) => {
+    try {
+        const userQuiz = await UserQuiz.create({
+            result: req.body.result,
+            userId: req.body.userId
+        });
+        return res.status(200).send(userQuiz);
+    } catch (err) {
+        return res.status(400).send({ 'message': `error create user quiz: ${err}` });
+    }
+}
+
+
+exports.deleteUserQuiz = async (req, res) => {
+    try {
+        await UserQuiz.destroy({
+            where: {
+                id: req.params.id
+            }
+        });
+        return res.status(200).send({ 'message': `User Quiz deleted` });
+    } catch (err) {
+        return res.status(400).send({ 'message': `error delete User Quiz answer: ${err}` });
     }
 }
 
