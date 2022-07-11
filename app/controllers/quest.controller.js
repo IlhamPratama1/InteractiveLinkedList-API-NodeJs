@@ -88,21 +88,17 @@ exports.deleteById = async (req, res) => {
 exports.getFilteredQuest = async (req, res) => {
     try {
         const datas = [
-            {'type': 'single', 'isComplete': true},
-            {'type': 'single', 'isComplete': false},
-            {'type': 'double', 'isComplete': true},
-            {'type': 'double', 'isComplete': false},
-            {'type': 'circular', 'isComplete': true},
-            {'type': 'circular', 'isComplete': false},
-            {'type': 'struct', 'isComplete': true},
-            {'type': 'struct', 'isComplete': false},
+            {'type': 'single'},
+            {'type': 'double'},
+            {'type': 'circular'},
+            {'type': 'struct'},
         ];
         for (let i = 0; i < datas.length; i++) {
-            const userList = await User.findAll({
+            const trueList = await User.findAll({
                 include: {
                     model: UserQuest,
                     where: {
-                        isComplete: datas[i].isComplete
+                        isComplete: true
                     },
                     include: [
                         {
@@ -116,8 +112,26 @@ exports.getFilteredQuest = async (req, res) => {
                     required: true
                 },
             });
-            datas[i]['data'] = userList;
-            datas[i]['length'] = userList.length;
+            const falseList = await User.findAll({
+                include: {
+                    model: UserQuest,
+                    where: {
+                        isComplete: false
+                    },
+                    include: [
+                        {
+                            model: Quest,
+                            where: {
+                                type: datas[i].type
+                            },
+                            required: true
+                        }
+                    ],
+                    required: true
+                },
+            });
+            datas[i]['true'] = trueList.length;
+            datas[i]['false'] = falseList.length;
         }
 
         return res.status(200).send(datas);
