@@ -94,41 +94,35 @@ exports.getFilteredQuest = async (req, res) => {
             {'type': 'struct'},
         ];
         for (let i = 0; i < datas.length; i++) {
-            const trueList = await User.findAll({
-                include: {
-                    model: UserQuest,
-                    where: {
-                        isComplete: true
-                    },
-                    include: [
-                        {
-                            model: Quest,
-                            where: {
-                                type: datas[i].type
-                            },
-                            required: true
-                        }
-                    ],
-                    required: true
+            const trueList = await UserQuest.findAll({
+                where: {
+                    isComplete: true
                 },
+                include: [
+                    {
+                        model: Quest,
+                        where: {
+                            type: datas[i].type
+                        },
+                        required: true
+                    }
+                ],
+                required: true
             });
-            const falseList = await User.findAll({
-                include: {
-                    model: UserQuest,
-                    where: {
-                        isComplete: false
-                    },
-                    include: [
-                        {
-                            model: Quest,
-                            where: {
-                                type: datas[i].type
-                            },
-                            required: true
-                        }
-                    ],
-                    required: true
+            const falseList = await UserQuest.findAll({
+                where: {
+                    isComplete: false
                 },
+                include: [
+                    {
+                        model: Quest,
+                        where: {
+                            type: datas[i].type
+                        },
+                        required: true
+                    }
+                ],
+                required: true
             });
             datas[i]['true'] = trueList.length;
             datas[i]['false'] = falseList.length;
